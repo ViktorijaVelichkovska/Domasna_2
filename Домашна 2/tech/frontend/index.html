@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Македонска берза</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="logo.jpg" alt="Лого" id="logo">
+        <nav>
+            <a href="izvestai.html">Последни извештаи</a>
+            <a href="istorija.html">Историја на цени</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Македонска берза</h1>
+        <p>Информации за акциите од последната деценија</p>
+
+        <!-- Контенер за прикажување на податоците -->
+        <div id="company-data">
+            <h2>Детали за компанија</h2>
+            <ul id="company-list"></ul>
+        </div>
+    </main>
+
+    <script>
+        // JavaScript за повикување на API и прикажување на податоци
+        fetch('http://127.0.0.1:5000/api/company/ADIN')
+            .then(response => response.json())
+            .then(data => {
+                const companyList = document.getElementById('company-list');
+
+                data.forEach(record => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `Дата: ${record.date}, Цена: ${record.last_transaction_price}, Профит: ${record.profit}`;
+                    companyList.appendChild(listItem);
+                });
+            })
+            .catch(error => console.log('Error fetching data:', error));  // Грешка при повикот на API
+    </script>
+
+</body>
+</html>
